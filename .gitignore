@@ -1,0 +1,12 @@
+target/*
+*/target/*
+.idea/*
+*/.idea/*
+out/*
+*/out/*
+project/*
+*/project/*
+*~
+*#
+*.iml
+password.md
