@@ -8,8 +8,8 @@ import org.elasticsearch.spark.rdd.api.java.JavaEsSpark
 
 
 /**
-  * Created by gregoire on 26/04/16.
-  */
+ * Created by gregoire on 26/04/16.
+ */
 object Tutorial {
 
   def main(args: Array[String]): Unit = {
@@ -23,14 +23,14 @@ object Tutorial {
 
     ssc.checkpoint("checkpoint")
 
-
     val sRDD = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, Map[String, String]("metadata.broker.list" -> "localhost:9092"), Set[String]("connect-test"))
 
     val payloadRDD = sRDD.map(_._2).map(_.split("payload\":\"")(1).dropRight(2))
 
-    case class SoloString(val input: String){}
+    case class SoloString(val input: String) {}
 
     payloadRDD.map(s => SoloString(s)).foreachRDD(rdd => EsSpark.saveToEs(rdd, "test_streaming/type_streaming"))
+    payloadRDD.foreachRDD(_.foreach(println))
 
     ssc.start()
 

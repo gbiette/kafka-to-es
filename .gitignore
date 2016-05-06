@@ -11,3 +11,4 @@ project/*
 *.iml
 password.md
 checkpoint/*
+data/*
